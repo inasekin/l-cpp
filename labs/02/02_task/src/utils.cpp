@@ -1,0 +1,25 @@
+#include "include/utils.h"
+
+#include <filesystem>
+#include <fstream>
+#include <iomanip>
+#include <random>
+
+std::vector<int> generate_data(std::size_t max_size) {
+    std::mt19937 rng(12345);
+    std::uniform_int_distribution<int> dist(0, 1'000'000);
+    std::vector<int> data(max_size);
+    for (auto& x : data) {
+        x = dist(rng);
+    }
+    return data;
+}
+
+void write_deque_results(const std::string& filename, const std::vector<DequeResult>& results) {
+    std::filesystem::create_directories(std::filesystem::path(filename).parent_path());
+    std::ofstream out(filename);
+    out << std::left << std::setw(10) << "N" << std::setw(15) << "Time (ns)" << "size\n";
+    for (const auto& r : results) {
+        out << std::left << std::setw(10) << r.n << std::setw(15) << r.time_ns << r.size << "\n";
+    }
+}
