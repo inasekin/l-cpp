@@ -71,3 +71,4 @@ Testing/
 *out/
 
 .idea
+.DS_Store
